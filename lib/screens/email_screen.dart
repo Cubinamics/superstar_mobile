@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
+import 'dart:async';
 import '../services/api_service.dart';
 import '../screens/idle_screen.dart';
 
 class EmailScreen extends StatefulWidget {
   final Uint8List photoBytes;
   final String gender;
+  final String? sessionId; // Optional - if provided, skip session creation
 
   const EmailScreen({
     Key? key,
     required this.photoBytes,
     required this.gender,
+    this.sessionId,
   }) : super(key: key);
 
   @override
@@ -22,11 +25,43 @@ class _EmailScreenState extends State<EmailScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isLoading = false;
   String? _sessionId;
+  Timer? _sessionTimer;
 
   @override
   void initState() {
     super.initState();
-    _uploadSession();
+    // If sessionId is provided, use it; otherwise create new session
+    if (widget.sessionId != null) {
+      _sessionId = widget.sessionId;
+      _startSessionTimer(); // Start timer for remaining time
+    } else {
+      _uploadSession();
+    }
+  }
+
+  @override
+  void dispose() {
+    _sessionTimer?.cancel();
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  void _startSessionTimer() {
+    // Start timer for remaining session time
+    // Since we're already in the flow, we'll use a shorter timeout
+    _sessionTimer = Timer(const Duration(seconds: 60), () {
+      if (mounted) {
+        _returnToMainScreen();
+      }
+    });
+  }
+
+  void _returnToMainScreen() {
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const IdleScreen()),
+      (route) => false,
+    );
   }
 
   Future<void> _uploadSession() async {
@@ -44,6 +79,9 @@ class _EmailScreenState extends State<EmailScreen> {
         _sessionId = sessionId;
         _isLoading = false;
       });
+
+      // Start session timer since we just created a new session
+      _startSessionTimer();
     } catch (e) {
       setState(() {
         _isLoading = false;
@@ -71,11 +109,12 @@ class _EmailScreenState extends State<EmailScreen> {
       });
 
       if (success) {
+        _sessionTimer?.cancel(); // Cancel timer on successful email send
         _showSuccessDialog();
       } else {
         _showErrorDialog('Failed to send email. Please try again.');
       }
-    } on SessionExpiredException catch (e) {
+    } on SessionExpiredException {
       setState(() {
         _isLoading = false;
       });
@@ -188,12 +227,6 @@ class _EmailScreenState extends State<EmailScreen> {
     }
 
     return null;
-  }
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    super.dispose();
   }
 
   @override
@@ -372,6 +405,8 @@ class _EmailScreenState extends State<EmailScreen> {
                         onPressed: _isLoading
                             ? null
                             : () {
+                                _sessionTimer
+                                    ?.cancel(); // Cancel timer when skipping
                                 Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(
@@ -380,7 +415,7 @@ class _EmailScreenState extends State<EmailScreen> {
                                 );
                               },
                         child: const Text(
-                          'Skip for now',
+                          'Skip/Finish',
                           style: TextStyle(
                             color: Colors.grey,
                             fontSize: 16,
