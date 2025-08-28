@@ -245,31 +245,49 @@ class _CameraScreenState extends State<CameraScreen> {
                     child: _isInitialized && _controller != null
                         ? Stack(
                             children: [
-                              CameraPreview(_controller!),
+                              // Ensure consistent sizing with SizedBox
+                              SizedBox(
+                                width: double.infinity,
+                                height: double.infinity,
+                                child: FittedBox(
+                                  fit: BoxFit.cover,
+                                  child: SizedBox(
+                                    width: _controller!
+                                            .value.previewSize?.height ??
+                                        1,
+                                    height:
+                                        _controller!.value.previewSize?.width ??
+                                            1,
+                                    child: CameraPreview(_controller!),
+                                  ),
+                                ),
+                              ),
                               if (_isCountingDown)
-                                Container(
-                                  color: Colors.black.withOpacity(0.7),
-                                  child: Center(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          '$_countdown',
-                                          style: const TextStyle(
-                                            fontSize: 120,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
+                                Positioned.fill(
+                                  child: Container(
+                                    color: Colors.black.withOpacity(0.7),
+                                    child: Center(
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            '$_countdown',
+                                            style: const TextStyle(
+                                              fontSize: 120,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                            ),
                                           ),
-                                        ),
-                                        const Text(
-                                          'Get ready!',
-                                          style: TextStyle(
-                                            fontSize: 24,
-                                            color: Colors.white,
+                                          const Text(
+                                            'Get ready!',
+                                            style: TextStyle(
+                                              fontSize: 24,
+                                              color: Colors.white,
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
