@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'gender_selection_screen.dart';
 import 'terms_and_conditions_screen.dart';
+import '../theme/app_theme.dart';
 
 class IdleScreen extends StatelessWidget {
   const IdleScreen({Key? key}) : super(key: key);
@@ -9,6 +10,8 @@ class IdleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width: double.infinity, // Force full width
+        height: double.infinity, // Force full height
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -17,27 +20,30 @@ class IdleScreen extends StatelessWidget {
           ),
         ),
         child: SafeArea(
-          child: Padding(
+          child: Container(
+            width: double.infinity, // Ensure SafeArea takes full width
             padding: const EdgeInsets.all(24.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment:
+                  CrossAxisAlignment.center, // Center horizontally
               children: [
                 // Logo/Branding
                 const Icon(
                   Icons.camera_alt_outlined,
-                  size: 120,
+                  size: 100,
                   color: Colors.white,
                 ),
-                const SizedBox(height: 40),
+                const SizedBox(height: 30),
 
                 // Title
-                const Text(
-                  'Adidas Superstar',
-                  style: TextStyle(
-                    fontSize: 42,
+                Text(
+                  'REMIX YOUR STYLE',
+                  style: AppTheme.headingMedium.copyWith(
+                    fontSize: 40,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
-                    letterSpacing: 2,
+                    letterSpacing: 1,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -45,10 +51,10 @@ class IdleScreen extends StatelessWidget {
                 const SizedBox(height: 16),
 
                 // Subtitle
-                const Text(
-                  'Interactive Experience',
-                  style: TextStyle(
-                    fontSize: 24,
+                Text(
+                  'Snap a photo. Let the app create your look.',
+                  style: AppTheme.headingMedium.copyWith(
+                    fontSize: 20,
                     color: Colors.grey,
                     letterSpacing: 1,
                   ),
@@ -79,12 +85,11 @@ class IdleScreen extends StatelessWidget {
                     ),
                     elevation: 8,
                   ),
-                  child: const Text(
-                    'START EXPERIENCE',
-                    style: TextStyle(
+                  child: Text(
+                    'START',
+                    style: AppTheme.buttonText.copyWith(
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1,
+                      color: Colors.black,
                     ),
                   ),
                 ),
@@ -101,10 +106,9 @@ class IdleScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  child: const Text(
+                  child: Text(
                     'Terms and Conditions',
-                    style: TextStyle(
-                      fontSize: 16,
+                    style: AppTheme.bodyLarge.copyWith(
                       color: Colors.grey,
                       decoration: TextDecoration.underline,
                       height: 1.5,

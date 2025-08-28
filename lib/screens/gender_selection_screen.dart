@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'camera_screen.dart';
+import '../theme/app_theme.dart';
 
 class GenderSelectionScreen extends StatefulWidget {
   const GenderSelectionScreen({Key? key}) : super(key: key);
@@ -38,21 +39,16 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen> {
                 const SizedBox(height: 20),
 
                 // Title
-                const Text(
-                  'Select Your Style',
-                  style: TextStyle(
-                    fontSize: 36,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                Text(
+                  'PICK YOUR VIBE',
+                  style: AppTheme.headingLarge,
                 ),
 
                 const SizedBox(height: 16),
 
-                const Text(
-                  'Choose your preference for personalized outfit recommendations',
-                  style: TextStyle(
-                    fontSize: 16,
+                Text(
+                  'Choose your style. We’ll turn it into your Superstar look.',
+                  style: AppTheme.bodyLarge.copyWith(
                     color: Colors.grey,
                     height: 1.4,
                   ),
@@ -114,13 +110,10 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen> {
                           borderRadius: BorderRadius.circular(25),
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         'CONTINUE',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          letterSpacing: 1,
-                        ),
+                        style:
+                            AppTheme.buttonText.copyWith(color: Colors.black),
                       ),
                     ),
                   ),
@@ -180,9 +173,8 @@ class _GenderSelectionScreenState extends State<GenderSelectionScreen> {
             Expanded(
               child: Text(
                 label,
-                style: TextStyle(
+                style: AppTheme.headingMedium.copyWith(
                   fontSize: 24,
-                  fontWeight: FontWeight.bold,
                   color: isSelected ? accentColor : Colors.white,
                 ),
               ),

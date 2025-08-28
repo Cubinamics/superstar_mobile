@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:async';
 import '../services/api_service.dart';
 import '../screens/idle_screen.dart';
+import '../theme/app_theme.dart';
 
 class EmailScreen extends StatefulWidget {
   final Uint8List photoBytes;
@@ -314,24 +315,16 @@ class _EmailScreenState extends State<EmailScreen> {
                     const SizedBox(height: 20),
 
                     // Title
-                    const Text(
+                    Text(
                       'Get Your Snapshot',
-                      style: TextStyle(
-                        fontSize: 36,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                      style: AppTheme.headingLarge,
                     ),
 
                     const SizedBox(height: 16),
 
-                    const Text(
+                    Text(
                       'Your photo is now being displayed on the monitors! Enter your email to receive a personalized snapshot.',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey,
-                        height: 1.4,
-                      ),
+                      style: AppTheme.bodyLarge.copyWith(color: Colors.grey),
                     ),
 
                     const SizedBox(height: 60),
@@ -364,21 +357,16 @@ class _EmailScreenState extends State<EmailScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
+                          Text(
                             'Email Address',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                            style: AppTheme.headingSmall,
                           ),
                           const SizedBox(height: 12),
                           TextFormField(
                             controller: _emailController,
                             validator: _validateEmail,
                             keyboardType: TextInputType.emailAddress,
-                            style: const TextStyle(
-                                color: Colors.white, fontSize: 16),
+                            style: AppTheme.bodyLarge,
                             decoration: InputDecoration(
                               hintText: 'your@email.com',
                               hintStyle: TextStyle(color: Colors.grey.shade400),
@@ -432,13 +420,10 @@ class _EmailScreenState extends State<EmailScreen> {
                                   color: Colors.black,
                                 ),
                               )
-                            : const Text(
+                            : Text(
                                 'SEND SNAPSHOT',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  letterSpacing: 1,
-                                ),
+                                style: AppTheme.buttonText
+                                    .copyWith(color: Colors.black),
                               ),
                       ),
                     ),
@@ -449,12 +434,10 @@ class _EmailScreenState extends State<EmailScreen> {
                     Center(
                       child: TextButton(
                         onPressed: _isLoading ? null : _skipSession,
-                        child: const Text(
+                        child: Text(
                           'Skip/Finish',
-                          style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 16,
-                          ),
+                          style:
+                              AppTheme.bodyLarge.copyWith(color: Colors.grey),
                         ),
                       ),
                     ),

@@ -19,7 +19,7 @@ class _CameraScreenState extends State<CameraScreen> {
   CameraController? _controller;
   bool _isInitialized = false;
   bool _isCountingDown = false;
-  int _countdown = 5;
+  int _countdown = 10;
 
   @override
   void initState() {
@@ -217,7 +217,7 @@ class _CameraScreenState extends State<CameraScreen> {
                     ),
                     const Expanded(
                       child: Text(
-                        'Take Your Photo',
+                        'SNAP YOUR POSE!',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -298,7 +298,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 child: Column(
                   children: [
                     const Text(
-                      'Position yourself in the frame and tap the button below.\nThe photo will be taken after a 5-second countdown.',
+                      'Step up. You’ve got 10 seconds! Make it original.',
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.grey,
