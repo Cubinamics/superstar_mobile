@@ -32,10 +32,13 @@ class ApiService {
       Uint8List photoBytes, String gender) async {
     try {
       var request =
-          http.MultipartRequest('POST', Uri.parse('$baseUrl/session'));
+          http.MultipartRequest('POST', Uri.parse('$baseUrl/api/session'));
 
       // Add gender field
       request.fields['gender'] = gender;
+
+      // Add source field to indicate mobile upload
+      request.fields['source'] = 'mobile';
 
       // Add API key header
       request.headers.addAll(_getHeaders());
@@ -68,7 +71,7 @@ class ApiService {
   static Future<bool> sendEmail(String sessionId, String email) async {
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl/session/$sessionId/email'),
+        Uri.parse('$baseUrl/api/session/$sessionId/email'),
         headers: _getJsonHeaders(),
         body: json.encode({
           'email': email,
@@ -96,7 +99,7 @@ class ApiService {
   static Future<bool> skipSession(String sessionId) async {
     try {
       final response = await http.post(
-        Uri.parse('$baseUrl/session/$sessionId/skip'),
+        Uri.parse('$baseUrl/api/session/$sessionId/skip'),
         headers: _getJsonHeaders(),
       );
 

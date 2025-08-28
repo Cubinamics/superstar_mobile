@@ -137,11 +137,11 @@ class _CameraScreenState extends State<CameraScreen> {
 
     setState(() {
       _isCountingDown = true;
-      _countdown = 5;
+      _countdown = 10;
     });
 
     // Countdown timer
-    for (int i = 5; i > 0; i--) {
+    for (int i = 10; i > 0; i--) {
       if (!mounted) return;
       setState(() {
         _countdown = i;

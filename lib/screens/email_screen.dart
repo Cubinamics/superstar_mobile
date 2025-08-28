@@ -213,12 +213,12 @@ class _EmailScreenState extends State<EmailScreen> {
       context: context,
       barrierDismissible: false,
       builder: (context) => AlertDialog(
-        backgroundColor: Colors.green.shade50,
+        backgroundColor: Colors.white,
         title: Row(
           children: [
-            Icon(Icons.check_circle, color: Colors.green.shade600, size: 28),
+            Icon(Icons.check_circle, color: Colors.black, size: 28),
             const SizedBox(width: 12),
-            const Text('Email Sent!'),
+            const Text('Email Sent!', style: TextStyle(color: Colors.black)),
           ],
         ),
         // content: const Text(
@@ -233,7 +233,7 @@ class _EmailScreenState extends State<EmailScreen> {
                 (route) => false,
               );
             },
-            child: const Text('DONE'),
+            child: const Text('DONE', style: TextStyle(color: Colors.black)),
           ),
         ],
       ),
@@ -316,14 +316,14 @@ class _EmailScreenState extends State<EmailScreen> {
 
                     // Title
                     Text(
-                      'Get Your Snapshot',
-                      style: AppTheme.headingLarge,
+                      'GET YOUR SUPERSTAR SNAPSHOT.',
+                      style: AppTheme.headingMedium,
                     ),
 
                     const SizedBox(height: 16),
 
                     Text(
-                      'Your photo is now being displayed on the monitors! Enter your email to receive a personalized snapshot.',
+                      'Drop your email. Lock your remix. 90 seconds to claim it.',
                       style: AppTheme.bodyLarge.copyWith(color: Colors.grey),
                     ),
 
@@ -421,7 +421,7 @@ class _EmailScreenState extends State<EmailScreen> {
                                 ),
                               )
                             : Text(
-                                'SEND SNAPSHOT',
+                                'SEND MY SNAP',
                                 style: AppTheme.buttonText
                                     .copyWith(color: Colors.black),
                               ),

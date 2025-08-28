@@ -150,7 +150,7 @@ class _PhotoReviewScreenState extends State<PhotoReviewScreen> {
                     ),
                     const Expanded(
                       child: Text(
-                        'Review Your Photo',
+                        'RCHECK YOUR PHOTO',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -188,7 +188,7 @@ class _PhotoReviewScreenState extends State<PhotoReviewScreen> {
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24.0),
                 child: Text(
-                  'How does your photo look? You can retake it or continue to see your outfit combination on the displays.',
+                  'Retake or lock it in.',
                   style: TextStyle(
                     fontSize: 16,
                     color: Colors.grey,
