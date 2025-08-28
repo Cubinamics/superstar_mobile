@@ -9,6 +9,24 @@ class ApiService {
   // For production: 'http://YOUR_DIGITALOCEAN_IP:3001'
   static const String baseUrl = 'http://10.0.2.2:3001';
 
+  // API key for authentication - must match backend
+  static const String apiKey = 'adidas-superstar-2025-secret';
+
+  // Helper method to get headers with API key
+  static Map<String, String> _getHeaders() {
+    return {
+      'x-api-key': apiKey,
+    };
+  }
+
+  // Helper method to get headers with API key and content type
+  static Map<String, String> _getJsonHeaders() {
+    return {
+      'x-api-key': apiKey,
+      'Content-Type': 'application/json',
+    };
+  }
+
   /// Create a new session with user photo and gender
   static Future<String> createSession(
       Uint8List photoBytes, String gender) async {
@@ -18,6 +36,9 @@ class ApiService {
 
       // Add gender field
       request.fields['gender'] = gender;
+
+      // Add API key header
+      request.headers.addAll(_getHeaders());
 
       // Add photo file
       request.files.add(
@@ -48,9 +69,7 @@ class ApiService {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/session/$sessionId/email'),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: _getJsonHeaders(),
         body: json.encode({
           'email': email,
         }),
@@ -78,9 +97,7 @@ class ApiService {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/session/$sessionId/skip'),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: _getJsonHeaders(),
       );
 
       if (response.statusCode == 202) {
@@ -103,7 +120,10 @@ class ApiService {
   /// Check backend health
   static Future<bool> checkHealth() async {
     try {
-      final response = await http.get(Uri.parse('$baseUrl/health'));
+      final response = await http.get(
+        Uri.parse('$baseUrl/health'),
+        headers: _getHeaders(),
+      );
       return response.statusCode == 200;
     } catch (e) {
       return false;
