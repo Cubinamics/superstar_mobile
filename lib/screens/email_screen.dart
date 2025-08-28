@@ -220,9 +220,9 @@ class _EmailScreenState extends State<EmailScreen> {
             const Text('Email Sent!'),
           ],
         ),
-        content: const Text(
-          'Your personalized snapshot has been sent to your email. Thank you for experiencing Adidas Superstar!',
-        ),
+        // content: const Text(
+        //   'Your personalized snapshot has been sent to your email. Thank you for experiencing Adidas Superstar!',
+        // ),
         actions: [
           TextButton(
             onPressed: () {

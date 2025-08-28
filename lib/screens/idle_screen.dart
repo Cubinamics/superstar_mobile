@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'info_screen.dart';
+import 'gender_selection_screen.dart';
+import 'terms_and_conditions_screen.dart';
 
 class IdleScreen extends StatelessWidget {
   const IdleScreen({Key? key}) : super(key: key);
@@ -62,7 +63,7 @@ class IdleScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const InfoScreen(),
+                        builder: (context) => const GenderSelectionScreen(),
                       ),
                     );
                   },
@@ -90,15 +91,26 @@ class IdleScreen extends StatelessWidget {
 
                 const SizedBox(height: 40),
 
-                // Instructions
-                const Text(
-                  'Touch to begin your personalized\nAdidas Superstar journey',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.grey,
-                    height: 1.5,
+                // Terms and Conditions Button
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const TermsAndConditionsScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    'Terms and Conditions',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.grey,
+                      decoration: TextDecoration.underline,
+                      height: 1.5,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ],
             ),
