@@ -73,6 +73,33 @@ class ApiService {
     }
   }
 
+  /// Skip session (user chose not to provide email)
+  static Future<bool> skipSession(String sessionId) async {
+    try {
+      final response = await http.post(
+        Uri.parse('$baseUrl/session/$sessionId/skip'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 202) {
+        return true;
+      } else if (response.statusCode == 410) {
+        throw SessionExpiredException('Session has expired or already used');
+      } else if (response.statusCode == 404) {
+        throw Exception('Session not found');
+      } else {
+        throw Exception('Failed to skip session: ${response.statusCode}');
+      }
+    } catch (e) {
+      if (e is SessionExpiredException) {
+        rethrow;
+      }
+      throw Exception('Network error: $e');
+    }
+  }
+
   /// Check backend health
   static Future<bool> checkHealth() async {
     try {

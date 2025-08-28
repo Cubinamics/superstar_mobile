@@ -129,6 +129,52 @@ class _EmailScreenState extends State<EmailScreen> {
     }
   }
 
+  Future<void> _skipSession() async {
+    if (_sessionId == null) {
+      // If no session exists, just navigate to idle
+      _sessionTimer?.cancel();
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const IdleScreen()),
+        (route) => false,
+      );
+      return;
+    }
+
+    try {
+      _sessionTimer?.cancel(); // Cancel timer when skipping
+
+      setState(() {
+        _isLoading = true;
+      });
+
+      // Call skip endpoint to immediately return displays to idle
+      await ApiService.skipSession(_sessionId!);
+
+      setState(() {
+        _isLoading = false;
+      });
+
+      // Navigate to idle screen
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const IdleScreen()),
+        (route) => false,
+      );
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+
+      // Even if skip API fails, still navigate to idle
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const IdleScreen()),
+        (route) => false,
+      );
+    }
+  }
+
   void _showSessionExpiredDialog() {
     showDialog(
       context: context,
@@ -402,18 +448,7 @@ class _EmailScreenState extends State<EmailScreen> {
                     // Skip button
                     Center(
                       child: TextButton(
-                        onPressed: _isLoading
-                            ? null
-                            : () {
-                                _sessionTimer
-                                    ?.cancel(); // Cancel timer when skipping
-                                Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => const IdleScreen()),
-                                  (route) => false,
-                                );
-                              },
+                        onPressed: _isLoading ? null : _skipSession,
                         child: const Text(
                           'Skip/Finish',
                           style: TextStyle(
