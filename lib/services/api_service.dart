@@ -7,7 +7,9 @@ class ApiService {
   // For Android emulator: 'http://10.0.2.2:3001'
   // For physical device on same network: 'http://192.168.1.100:3001' (your laptop IP)
   // For production: 'http://YOUR_DIGITALOCEAN_IP:3001'
-  static const String baseUrl = 'http://10.0.2.2:3001';
+  // static const String baseUrl = 'http://10.0.2.2:3001';
+  static const String baseUrl =
+      'https://superstar-devapp-tsqup.ondigitalocean.app';
 
   // API key for authentication - must match backend
   static const String apiKey = 'adidas-superstar-2025-secret';
